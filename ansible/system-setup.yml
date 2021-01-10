@@ -1,0 +1,12 @@
+- hosts: all
+  become: yes
+  roles:
+     - samdoran.mosquitto
+     - robertdebock.npm
+     - role: robertdebock.users
+       users_group_list:
+        - name: nodered
+       users_user_list:
+        - name: nodered
+          group: nodered
+     - robertdebock.node_red

@@ -1,0 +1,14 @@
+- src: samdoran.docker
+
+- src: samdoran.mosquitto
+
+- src: robertdebock.node_red
+  
+- src: robertdebock.service
+
+- src: robertdebock.npm
+
+- src: robertdebock.ca_certificates
+
+- src: robertdebock.users
+
