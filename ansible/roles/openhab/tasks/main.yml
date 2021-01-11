@@ -1,0 +1,54 @@
+---
+
+- name: Create /opt/jdk
+  file:
+    path: /opt/jdk
+    state: directory
+    mode: '0755'
+  tags: jdk
+
+- name: Untar Zulu 11 after download
+  unarchive:
+    src: http://cdn.azul.com/zulu-embedded/bin/zulu11.43.100-ca-jdk11.0.9.1-linux_aarch32hf.tar.gz
+    dest: /opt/jdk
+    remote_src: yes
+  tags: jdk
+
+- name: Add java alternative
+  community.general.alternatives:
+    name: java
+    link: /usr/bin/java
+    path: /opt/jdk/zulu11.43.100-ca-jdk11.0.9.1-linux_aarch32hf/bin/java
+    priority: 1
+  tags: jdk
+
+- name: Add javac alternative
+  community.general.alternatives:
+    name: javac
+    link: /usr/bin/javac
+    path: /opt/jdk/zulu11.43.100-ca-jdk11.0.9.1-linux_aarch32hf/bin/javac
+    priority: 1
+  tags: jdk
+
+- name: Install openhab apt key
+  apt_key:
+    url: "https://bintray.com/user/downloadSubjectPublicKey?username=openhab"
+    state: present
+
+- name: Add openhab apt repository
+  apt_repository:
+    repo: deb https://dl.bintray.com/openhab/apt-repo2 stable main
+    state: present
+    filename: 'openhab'
+
+- name: Install openhab package
+  apt:
+    name: "{{ packages }}"
+    update_cache: yes
+    state: present
+  notify: start openhab
+  vars:
+    packages:  
+      - openhab 
+      - openhab-addons
+

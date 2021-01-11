@@ -1,13 +1,20 @@
-- src: samdoran.docker
+---
 
-- src: samdoran.mosquitto
+roles:
+  - name: samdoran.docker
 
-- src: robertdebock.node_red
-  
-- src: robertdebock.service
+  - name: samdoran.mosquitto
 
-- src: robertdebock.npm
+  - name: robertdebock.node_red
+    
+  - name: robertdebock.service
 
-- src: robertdebock.ca_certificates
+  - name: robertdebock.npm
 
-- src: robertdebock.users
+  - name: robertdebock.ca_certificates
+
+  - name: robertdebock.users
+
+collections:
+  - name: community.general
+    source: https://galaxy.ansible.com

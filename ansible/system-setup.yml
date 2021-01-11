@@ -16,3 +16,5 @@
       zigbee_serial_port: /dev/serial/by-id/usb-dresden_elektronik_ingenieurtechnik_GmbH_ConBee_II_DE2403991-if00
       zigbee_user_groups: tty,dialout,sudo
       tags: zigbee2mqtt
+    - role: 'roles/openhab'
+      tags: openhab  
