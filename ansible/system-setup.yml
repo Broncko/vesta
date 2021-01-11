@@ -1,14 +1,18 @@
 - hosts: all
   become: yes
   roles:
-     - samdoran.mosquitto
-     - robertdebock.npm
-     - role: robertdebock.users
-       users_group_list:
+    - samdoran.mosquitto
+    - robertdebock.npm
+    - role: robertdebock.users
+      users_group_list:
         - name: nodered
-       users_user_list:
+      users_user_list:
         - name: nodered
           group: nodered
-     - robertdebock.node_red
-     - role: 'roles/homegear'
-       tags: homegear 
+    - robertdebock.node_red
+    - role: 'roles/homegear'
+      tags: homegear 
+    - role: 'roles/zigbee2mqtt'
+      zigbee_serial_port: /dev/serial/by-id/usb-dresden_elektronik_ingenieurtechnik_GmbH_ConBee_II_DE2403991-if00
+      zigbee_user_groups: tty,dialout,sudo
+      tags: zigbee2mqtt

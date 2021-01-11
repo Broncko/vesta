@@ -17,7 +17,7 @@
     state: present
   notify: restart homegear
   vars:
-    packages:
+    packages:  
       - homegear 
       - homegear-max
       - homegear-nodes-core 
