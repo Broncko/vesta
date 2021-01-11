@@ -1,0 +1,33 @@
+---
+# Pakete für homegear installieren
+- name: install homegear apt key
+  apt_key:
+    url: "https://apt.homegear.eu/Release.key"
+    state: present
+
+- apt_repository:
+    repo: deb https://apt.homegear.eu/Debian/ buster/
+    state: present
+    filename: 'homegear'
+
+- name: install packages
+  apt:
+    name: "{{ packages }}"
+    update_cache: yes
+    state: present
+  notify: restart homegear
+  vars:
+    packages:
+      - homegear 
+      - homegear-max
+      - homegear-nodes-core 
+      - homegear-management
+      - homegear-homematicbidcos
+
+- name: main.conf
+  copy: src=main.conf dest=/etc/homegear/main.conf
+  notify: restart homegear
+ 
+- name: max.conf
+  copy: src=max.conf dest=/etc/homegear/families/max.conf
+  notify: restart homegear

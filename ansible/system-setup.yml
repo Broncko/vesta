@@ -10,3 +10,5 @@
         - name: nodered
           group: nodered
      - robertdebock.node_red
+     - role: 'roles/homegear'
+       tags: homegear 
