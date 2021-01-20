@@ -1,5 +1,7 @@
 # Erstes Installation des RaspberryPi
 
+** WORK IN PROGRESS **
+
 ## TOC
 1. RaspberryPi OS auf SD Karte flashen
 2. Leere Datei mit Namen ssh in root Verzeichnis anlegen
