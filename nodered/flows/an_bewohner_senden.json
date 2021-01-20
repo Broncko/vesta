@@ -1,0 +1,211 @@
+[
+    {
+        "id": "fa23c1e.a9e934",
+        "type": "subflow",
+        "name": "DND",
+        "info": "# DND - Fresse halten, ich will pennen!\n\n## Wat et tut\nDo not disturb:\nReicht das Nachrichten-Objekt durch wenn innerhalb von definiertem Zeitraum, andernfalls wird der Output geblockt.\n\n## Parameter\n### aktiv (env)\nNur aktiv wenn auf true gesetzt.",
+        "category": "",
+        "in": [
+            {
+                "x": 120,
+                "y": 100,
+                "wires": [
+                    {
+                        "id": "4942f8c6.521a18"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 620,
+                "y": 100,
+                "wires": [
+                    {
+                        "id": "f5cc52e0.d3dd",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [
+            {
+                "name": "aktiv",
+                "type": "bool",
+                "value": "true",
+                "ui": {
+                    "icon": "font-awesome/fa-bell-slash",
+                    "label": {
+                        "en-US": "aktiv"
+                    },
+                    "type": "input",
+                    "opts": {
+                        "types": [
+                            "bool"
+                        ]
+                    }
+                }
+            }
+        ],
+        "color": "#E6E0F8",
+        "inputLabels": [
+            "msg"
+        ],
+        "outputLabels": [
+            "msg"
+        ],
+        "icon": "font-awesome/fa-bell-slash"
+    },
+    {
+        "id": "4942f8c6.521a18",
+        "type": "switch",
+        "z": "fa23c1e.a9e934",
+        "name": "angeschaltet",
+        "property": "aktiv",
+        "propertyType": "env",
+        "rules": [
+            {
+                "t": "true"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 250,
+        "y": 100,
+        "wires": [
+            [
+                "f5cc52e0.d3dd"
+            ]
+        ]
+    },
+    {
+        "id": "f5cc52e0.d3dd",
+        "type": "time-range-switch",
+        "z": "fa23c1e.a9e934",
+        "name": "Zwischen 9 und 21",
+        "lat": "",
+        "lon": "",
+        "startTime": "09:00",
+        "endTime": "21:00",
+        "startOffset": 0,
+        "endOffset": 0,
+        "x": 450,
+        "y": 100,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "5359829e.1c6e0c",
+        "type": "subflow",
+        "name": "an Bewohner senden",
+        "info": "",
+        "category": "",
+        "in": [
+            {
+                "x": 40,
+                "y": 80,
+                "wires": [
+                    {
+                        "id": "5684076e.3d08b8"
+                    }
+                ]
+            }
+        ],
+        "out": [],
+        "env": [
+            {
+                "name": "bewohner",
+                "type": "env",
+                "value": "global.telegram.chatIds"
+            },
+            {
+                "name": "dnd",
+                "type": "bool",
+                "value": "true"
+            }
+        ],
+        "color": "#A6BBCF",
+        "icon": "node-red-contrib-telegrambot/telegram_cmd.png"
+    },
+    {
+        "id": "1b24ed2.6b5a113",
+        "type": "telegram sender",
+        "z": "5359829e.1c6e0c",
+        "name": "Senden",
+        "bot": "70243f6a.645f6",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 560,
+        "y": 80,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "3547f9c7.832296",
+        "type": "change",
+        "z": "5359829e.1c6e0c",
+        "name": "setze ChatIds",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload.chatId",
+                "pt": "msg",
+                "to": "telegram.chatIds",
+                "tot": "global"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 360,
+        "y": 80,
+        "wires": [
+            [
+                "1b24ed2.6b5a113"
+            ]
+        ]
+    },
+    {
+        "id": "5684076e.3d08b8",
+        "type": "subflow:fa23c1e.a9e934",
+        "z": "5359829e.1c6e0c",
+        "name": "",
+        "x": 170,
+        "y": 80,
+        "wires": [
+            [
+                "3547f9c7.832296"
+            ]
+        ]
+    },
+    {
+        "id": "70243f6a.645f6",
+        "type": "telegram bot",
+        "botname": "GharaWohntInKmp5_bot",
+        "usernames": "bronckoKmp5",
+        "chatids": "",
+        "baseapiurl": "",
+        "updatemode": "polling",
+        "pollinterval": "90",
+        "usesocks": false,
+        "sockshost": "",
+        "socksport": "6667",
+        "socksusername": "anonymous",
+        "sockspassword": "",
+        "bothost": "",
+        "botpath": "",
+        "localbotport": "8443",
+        "publicbotport": "8443",
+        "privatekey": "",
+        "certificate": "",
+        "useselfsignedcertificate": false,
+        "sslterminated": false,
+        "verboselogging": false
+    }
+]

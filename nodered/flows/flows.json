@@ -1,0 +1,1574 @@
+[
+    {
+        "id": "af3ec732.87af18",
+        "type": "tab",
+        "label": "Kommandos",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "86ae2677.27a028",
+        "type": "tab",
+        "label": "Werte senden",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "5768dd35.d74374",
+        "type": "tab",
+        "label": "Testflow",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "d5a0e700.940238",
+        "type": "tab",
+        "label": "Maschine fertich?",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "c3b58f99.4b6b",
+        "type": "tab",
+        "label": "Zeitschaltung",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "733f33fb.bb2f8c",
+        "type": "tab",
+        "label": "Carlos",
+        "disabled": false,
+        "info": "Fragen ob der Staubsauger gestartet werden soll, wenn keiner zu Hause ist"
+    },
+    {
+        "id": "5359829e.1c6e0c",
+        "type": "subflow",
+        "name": "an Bewohner senden",
+        "info": "",
+        "category": "",
+        "in": [
+            {
+                "x": 40,
+                "y": 80,
+                "wires": [
+                    {
+                        "id": "5684076e.3d08b8"
+                    }
+                ]
+            }
+        ],
+        "out": [],
+        "env": [
+            {
+                "name": "bewohner",
+                "type": "env",
+                "value": "global.telegram.chatIds"
+            },
+            {
+                "name": "dnd",
+                "type": "bool",
+                "value": "true"
+            }
+        ],
+        "color": "#A6BBCF",
+        "icon": "node-red-contrib-telegrambot/telegram_cmd.png"
+    },
+    {
+        "id": "7a2b66c.69a5298",
+        "type": "subflow",
+        "name": "Gerät gestartet oder fertich",
+        "info": "Prüft basierend auf dem shelly plug-s ob das angeschlossene Gerät gerade gestartet wurde oder fertig geworden ist.\n\nz.B. für:\n- Spülmaschine\n- Waschmaschine\n- Trockner\n\n\nOutput 1 (oben): Gerät wurde gerade gestartet\nOutput 2 (unten): Gerät ist soeben fertig geworden",
+        "category": "",
+        "in": [
+            {
+                "x": 60,
+                "y": 120,
+                "wires": [
+                    {
+                        "id": "eb184cfa.a27f1"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 1100,
+                "y": 80,
+                "wires": [
+                    {
+                        "id": "4b15a682.2f2678",
+                        "port": 0
+                    }
+                ]
+            },
+            {
+                "x": 1100,
+                "y": 160,
+                "wires": [
+                    {
+                        "id": "4b15a682.2f2678",
+                        "port": 1
+                    }
+                ]
+            }
+        ],
+        "env": [],
+        "color": "#AAAA66",
+        "inputLabels": [
+            "Integer in Watt"
+        ],
+        "outputLabels": [
+            "gestartet",
+            "fertich"
+        ],
+        "icon": "font-awesome/fa-power-off",
+        "status": {
+            "x": 700,
+            "y": 40,
+            "wires": [
+                {
+                    "id": "7238a31.a712d5c",
+                    "port": 0
+                },
+                {
+                    "id": "9980cc34.1f96",
+                    "port": 0
+                }
+            ]
+        }
+    },
+    {
+        "id": "c77d74c7.70dbd8",
+        "type": "subflow",
+        "name": "Is einer da?",
+        "info": "",
+        "category": "",
+        "in": [],
+        "out": [
+            {
+                "x": 900,
+                "y": 120,
+                "wires": [
+                    {
+                        "id": "9cbde0c8.e9846",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [],
+        "color": "#DDAA99"
+    },
+    {
+        "id": "fa23c1e.a9e934",
+        "type": "subflow",
+        "name": "DND",
+        "info": "# DND - Fresse halten, ich will pennen!\n\n## Wat et tut\nDo not disturb:\nReicht das Nachrichten-Objekt durch wenn innerhalb von definiertem Zeitraum, andernfalls wird der Output geblockt.\n\n## Parameter\n### aktiv (env)\nNur aktiv wenn auf true gesetzt.",
+        "category": "",
+        "in": [
+            {
+                "x": 120,
+                "y": 100,
+                "wires": [
+                    {
+                        "id": "4942f8c6.521a18"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 620,
+                "y": 100,
+                "wires": [
+                    {
+                        "id": "f5cc52e0.d3dd",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [
+            {
+                "name": "aktiv",
+                "type": "bool",
+                "value": "true",
+                "ui": {
+                    "icon": "font-awesome/fa-bell-slash",
+                    "label": {
+                        "en-US": "aktiv"
+                    },
+                    "type": "input",
+                    "opts": {
+                        "types": [
+                            "bool"
+                        ]
+                    }
+                }
+            }
+        ],
+        "color": "#E6E0F8",
+        "inputLabels": [
+            "msg"
+        ],
+        "outputLabels": [
+            "msg"
+        ],
+        "icon": "font-awesome/fa-bell-slash"
+    },
+    {
+        "id": "79e66eb.1580d9",
+        "type": "mqtt-broker",
+        "name": "Mosquitto (lokal)",
+        "broker": "localhost",
+        "port": "1883",
+        "clientid": "",
+        "usetls": false,
+        "compatmode": false,
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": ""
+    },
+    {
+        "id": "70243f6a.645f6",
+        "type": "telegram bot",
+        "botname": "GharaWohntInKmp5_bot",
+        "usernames": "bronckoKmp5",
+        "chatids": "",
+        "baseapiurl": "",
+        "updatemode": "polling",
+        "pollinterval": "90",
+        "usesocks": false,
+        "sockshost": "",
+        "socksport": "6667",
+        "socksusername": "anonymous",
+        "sockspassword": "",
+        "bothost": "",
+        "botpath": "",
+        "localbotport": "8443",
+        "publicbotport": "8443",
+        "privatekey": "",
+        "certificate": "",
+        "useselfsignedcertificate": false,
+        "sslterminated": false,
+        "verboselogging": false
+    },
+    {
+        "id": "c3670dce.18aa8",
+        "type": "telegram bot",
+        "d": true,
+        "botname": "HeinzBot",
+        "usernames": "",
+        "chatids": "",
+        "baseapiurl": "",
+        "updatemode": "polling",
+        "pollinterval": "300",
+        "usesocks": false,
+        "sockshost": "",
+        "socksport": "",
+        "socksusername": "anonymous",
+        "sockspassword": "",
+        "bothost": "",
+        "localbotport": "8443",
+        "publicbotport": "8443",
+        "privatekey": "",
+        "certificate": "",
+        "useselfsignedcertificate": false,
+        "sslterminated": false,
+        "verboselogging": true
+    },
+    {
+        "id": "61f98b66.e58784",
+        "type": "openhab2-controller",
+        "name": "openhab (lokal)",
+        "protocol": "http",
+        "host": "localhost",
+        "port": "8080",
+        "path": "",
+        "username": "broncko",
+        "password": "8Z$4JER%!ncS4dEQ&QN"
+    },
+    {
+        "id": "2b21684e.8700d8",
+        "type": "openhab-v2-controller",
+        "name": "openhab (lokal) 2",
+        "protocol": "http",
+        "ignoreInvalidCertificate": true,
+        "host": "localhost",
+        "port": "8080"
+    },
+    {
+        "id": "f7ea1db4.d7bc9",
+        "type": "telegram sender",
+        "z": "af3ec732.87af18",
+        "name": "Nachricht senden",
+        "bot": "70243f6a.645f6",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 870,
+        "y": 400,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "42e80da4.6285b4",
+        "type": "telegram command",
+        "z": "af3ec732.87af18",
+        "name": "/tach",
+        "command": "/tach",
+        "bot": "70243f6a.645f6",
+        "strict": false,
+        "hasresponse": false,
+        "useregex": false,
+        "removeregexcommand": false,
+        "outputs": 1,
+        "x": 130,
+        "y": 160,
+        "wires": [
+            [
+                "fb780bf0.6e6148",
+                "638f700c.cd0cb"
+            ]
+        ]
+    },
+    {
+        "id": "fb780bf0.6e6148",
+        "type": "function",
+        "z": "af3ec732.87af18",
+        "name": "Neuem user antworten",
+        "func": "name = msg.originalMessage.from.first_name;\nusername = msg.originalMessage.from.username;\n\nconst resident = name ? name : (username ? username : \"Bewohner\");\nconst msgText = \"Hallo \" + resident + \", ich bin Ghara, das intelligente Haus von Aurelia, Hendrik und Matilda. Du kannst mich alles fragen, um eine Übersicht zu bekommen, gib einfach /watdenn ein\"\n\nmsg.payload.type = 'message';\nmsg.payload.content = msgText;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 560,
+        "y": 160,
+        "wires": [
+            [
+                "f7ea1db4.d7bc9"
+            ]
+        ]
+    },
+    {
+        "id": "638f700c.cd0cb",
+        "type": "change",
+        "z": "af3ec732.87af18",
+        "name": "chatIds speichern",
+        "rules": [
+            {
+                "t": "set",
+                "p": "telegram.chatIds",
+                "pt": "global",
+                "to": "$distinct(\t    $append(\t        global.telegram.chatIds,\t        [msg.payload.chatId]\t    )\t)",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 330,
+        "y": 100,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "f0a9e912.9ff0f8",
+        "type": "telegram sender",
+        "z": "86ae2677.27a028",
+        "d": true,
+        "name": "Nachricht senden",
+        "bot": "70243f6a.645f6",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 1150,
+        "y": 380,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "b7996e25.b34e9",
+        "type": "mqtt in",
+        "z": "86ae2677.27a028",
+        "name": "Temp Esszimmer",
+        "topic": "homegear/1234-5678-9abc/plain/1/1/ACTUAL_TEMPERATURE",
+        "qos": "1",
+        "datatype": "utf8",
+        "broker": "79e66eb.1580d9",
+        "x": 200,
+        "y": 200,
+        "wires": [
+            [
+                "7ad6036b.31c59c"
+            ]
+        ]
+    },
+    {
+        "id": "78194747.9ee308",
+        "type": "function",
+        "z": "86ae2677.27a028",
+        "name": "Nachricht tmp geändert",
+        "func": "msg.payload = {\n    type: 'message',\n    content: 'Temperatur im Esszimmer stark geändert: ' + msg.temperature + \"°C\"\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 830,
+        "y": 200,
+        "wires": [
+            [
+                "d859d5e8.d10de8"
+            ]
+        ]
+    },
+    {
+        "id": "7ad6036b.31c59c",
+        "type": "change",
+        "z": "86ae2677.27a028",
+        "name": "setze msg.temperature",
+        "rules": [
+            {
+                "t": "set",
+                "p": "temperature",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 410,
+        "y": 200,
+        "wires": [
+            [
+                "2dd40317.314dbc"
+            ]
+        ]
+    },
+    {
+        "id": "d859d5e8.d10de8",
+        "type": "change",
+        "z": "86ae2677.27a028",
+        "name": "setze ChatIds",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload.chatId",
+                "pt": "msg",
+                "to": "telegram.chatIds",
+                "tot": "global"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 940,
+        "y": 380,
+        "wires": [
+            [
+                "f0a9e912.9ff0f8",
+                "58bb83f0.8e0f8c"
+            ]
+        ]
+    },
+    {
+        "id": "58bb83f0.8e0f8c",
+        "type": "debug",
+        "z": "86ae2677.27a028",
+        "name": "Hau alles raus",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1140,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "24b2d6c4.13217a",
+        "type": "telegram receiver",
+        "z": "af3ec732.87af18",
+        "name": "Einfach Gelaber",
+        "bot": "70243f6a.645f6",
+        "saveDataDir": "",
+        "filterCommands": true,
+        "x": 160,
+        "y": 280,
+        "wires": [
+            [
+                "b29b2949.ab15a8"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "b29b2949.ab15a8",
+        "type": "switch",
+        "z": "af3ec732.87af18",
+        "name": "Kennste?",
+        "property": "telegram.chatIds",
+        "propertyType": "global",
+        "rules": [
+            {
+                "t": "cont",
+                "v": "payload.chatId",
+                "vt": "msg"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 360,
+        "y": 280,
+        "wires": [
+            [
+                "a22ec8f0.209128"
+            ],
+            [
+                "af1012b0.6e2c6"
+            ]
+        ]
+    },
+    {
+        "id": "a22ec8f0.209128",
+        "type": "function",
+        "z": "af3ec732.87af18",
+        "name": "Kennich",
+        "func": "msg.payload.content = \"Jo was geht denn so ab?\"\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 520,
+        "y": 240,
+        "wires": [
+            [
+                "f7ea1db4.d7bc9"
+            ]
+        ]
+    },
+    {
+        "id": "af1012b0.6e2c6",
+        "type": "function",
+        "z": "af3ec732.87af18",
+        "name": "Kennich nich",
+        "func": "msg.payload.content = \"Wat du hier wills, sach ersma /tach\"\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 530,
+        "y": 320,
+        "wires": [
+            [
+                "f7ea1db4.d7bc9"
+            ]
+        ]
+    },
+    {
+        "id": "7f99dbc.f75b424",
+        "type": "mqtt in",
+        "z": "5768dd35.d74374",
+        "name": "MQTT Homegear",
+        "topic": "homegear/1234-5678-9abc/jsonobj/+/1/#",
+        "qos": "1",
+        "datatype": "json",
+        "broker": "79e66eb.1580d9",
+        "x": 120,
+        "y": 140,
+        "wires": [
+            [
+                "7e7b8b0e.50b724"
+            ]
+        ]
+    },
+    {
+        "id": "7e7b8b0e.50b724",
+        "type": "debug",
+        "z": "5768dd35.d74374",
+        "name": "Homegear debug",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 390,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "9d0e83b6.21b1f",
+        "type": "mqtt in",
+        "z": "5768dd35.d74374",
+        "name": "MQTT Shellies",
+        "topic": "shellies/#",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "79e66eb.1580d9",
+        "x": 120,
+        "y": 220,
+        "wires": [
+            [
+                "804aa99d.9f3b68"
+            ]
+        ]
+    },
+    {
+        "id": "75a9840d.4788cc",
+        "type": "switch",
+        "z": "7a2b66c.69a5298",
+        "name": "Gerät an?",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "gt",
+                "v": "2",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 360,
+        "y": 120,
+        "wires": [
+            [
+                "7238a31.a712d5c"
+            ],
+            [
+                "9980cc34.1f96"
+            ]
+        ]
+    },
+    {
+        "id": "1b24ed2.6b5a113",
+        "type": "telegram sender",
+        "z": "5359829e.1c6e0c",
+        "name": "Senden",
+        "bot": "70243f6a.645f6",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 560,
+        "y": 80,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "3547f9c7.832296",
+        "type": "change",
+        "z": "5359829e.1c6e0c",
+        "name": "setze ChatIds",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload.chatId",
+                "pt": "msg",
+                "to": "telegram.chatIds",
+                "tot": "global"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 360,
+        "y": 80,
+        "wires": [
+            [
+                "1b24ed2.6b5a113"
+            ]
+        ]
+    },
+    {
+        "id": "eb184cfa.a27f1",
+        "type": "function",
+        "z": "7a2b66c.69a5298",
+        "name": "parseFloat",
+        "func": "msg.payload = parseFloat(msg.payload);\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 190,
+        "y": 120,
+        "wires": [
+            [
+                "75a9840d.4788cc"
+            ]
+        ]
+    },
+    {
+        "id": "5961a70f.239898",
+        "type": "rbe",
+        "z": "7a2b66c.69a5298",
+        "name": "wert geändert?",
+        "func": "rbei",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "property": "device_is_on",
+        "x": 700,
+        "y": 120,
+        "wires": [
+            [
+                "4b15a682.2f2678"
+            ]
+        ]
+    },
+    {
+        "id": "28a00736.8acbc8",
+        "type": "function",
+        "z": "d5a0e700.940238",
+        "name": "Nachricht fertig",
+        "func": "msg.payload = {\n    type: 'message',\n    content: 'Die Spülmaschine is fertich, kannße ausräumen'\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 1240,
+        "y": 260,
+        "wires": [
+            [
+                "c8da13f8.ab386"
+            ]
+        ]
+    },
+    {
+        "id": "2920e4b2.99d7dc",
+        "type": "mqtt in",
+        "z": "d5a0e700.940238",
+        "name": "Leistung(W) Spülmaschine",
+        "topic": "shellies/shellyplug-s-B48C72/relay/0/power",
+        "qos": "1",
+        "datatype": "auto",
+        "broker": "79e66eb.1580d9",
+        "x": 610,
+        "y": 220,
+        "wires": [
+            [
+                "f01346e2.105618"
+            ]
+        ]
+    },
+    {
+        "id": "2dd40317.314dbc",
+        "type": "rbe",
+        "z": "86ae2677.27a028",
+        "name": "20% geändert?",
+        "func": "deadband",
+        "gap": "20%",
+        "start": "",
+        "inout": "in",
+        "property": "temperature",
+        "x": 620,
+        "y": 200,
+        "wires": [
+            [
+                "78194747.9ee308"
+            ]
+        ]
+    },
+    {
+        "id": "c8da13f8.ab386",
+        "type": "subflow:5359829e.1c6e0c",
+        "z": "d5a0e700.940238",
+        "name": "",
+        "env": [],
+        "x": 1480,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "f01346e2.105618",
+        "type": "subflow:7a2b66c.69a5298",
+        "z": "d5a0e700.940238",
+        "name": "Spülmaschine gestartet oder fertich?",
+        "env": [],
+        "x": 950,
+        "y": 220,
+        "wires": [
+            [
+                "3a7146f6.70fd4a"
+            ],
+            [
+                "28a00736.8acbc8"
+            ]
+        ]
+    },
+    {
+        "id": "7238a31.a712d5c",
+        "type": "change",
+        "z": "7a2b66c.69a5298",
+        "name": "an",
+        "rules": [
+            {
+                "t": "set",
+                "p": "device_is_on",
+                "pt": "msg",
+                "to": "true",
+                "tot": "bool"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 510,
+        "y": 80,
+        "wires": [
+            [
+                "5961a70f.239898"
+            ]
+        ]
+    },
+    {
+        "id": "9980cc34.1f96",
+        "type": "change",
+        "z": "7a2b66c.69a5298",
+        "name": "aus",
+        "rules": [
+            {
+                "t": "set",
+                "p": "device_is_on",
+                "pt": "msg",
+                "to": "false",
+                "tot": "bool"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 510,
+        "y": 160,
+        "wires": [
+            [
+                "5961a70f.239898"
+            ]
+        ]
+    },
+    {
+        "id": "4b15a682.2f2678",
+        "type": "switch",
+        "z": "7a2b66c.69a5298",
+        "name": "gestartet oder fertich",
+        "property": "device_is_on",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "true"
+            },
+            {
+                "t": "false"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 920,
+        "y": 120,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "3a7146f6.70fd4a",
+        "type": "function",
+        "z": "d5a0e700.940238",
+        "name": "Nachricht gestartet",
+        "func": "msg.payload = {\n    type: 'message',\n    content: 'Spülmaschine is jetz an'\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 1250,
+        "y": 180,
+        "wires": [
+            [
+                "c8da13f8.ab386"
+            ]
+        ]
+    },
+    {
+        "id": "2ac01f4d.d962e",
+        "type": "mqtt in",
+        "z": "d5a0e700.940238",
+        "name": "Leistung(W) Waschmaschine",
+        "topic": "shellies/shellyplug-s-B57D99/relay/0/power",
+        "qos": "1",
+        "datatype": "auto",
+        "broker": "79e66eb.1580d9",
+        "x": 620,
+        "y": 400,
+        "wires": [
+            [
+                "78e9ee58.5c2cd"
+            ]
+        ]
+    },
+    {
+        "id": "2159909a.f2152",
+        "type": "function",
+        "z": "d5a0e700.940238",
+        "name": "Nachricht fertig",
+        "func": "msg.payload = {\n    type: 'message',\n    content: 'Die Wäsche is fertich, kannße aufhängen'\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 1240,
+        "y": 440,
+        "wires": [
+            [
+                "725adc38.747c34"
+            ]
+        ]
+    },
+    {
+        "id": "725adc38.747c34",
+        "type": "subflow:5359829e.1c6e0c",
+        "z": "d5a0e700.940238",
+        "name": "",
+        "env": [],
+        "x": 1480,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "78e9ee58.5c2cd",
+        "type": "subflow:7a2b66c.69a5298",
+        "z": "d5a0e700.940238",
+        "name": "Waschmaschine gestartet oder fertich?",
+        "env": [],
+        "x": 960,
+        "y": 400,
+        "wires": [
+            [
+                "f88323e4.67a66"
+            ],
+            [
+                "2159909a.f2152"
+            ]
+        ]
+    },
+    {
+        "id": "f88323e4.67a66",
+        "type": "function",
+        "z": "d5a0e700.940238",
+        "name": "Nachricht gestartet",
+        "func": "msg.payload = {\n    type: 'message',\n    content: 'Waschmaschine is jetz an'\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 1250,
+        "y": 360,
+        "wires": [
+            [
+                "725adc38.747c34"
+            ]
+        ]
+    },
+    {
+        "id": "804aa99d.9f3b68",
+        "type": "debug",
+        "z": "5768dd35.d74374",
+        "name": "Shellies debug",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 380,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "bad40811.614238",
+        "type": "inject",
+        "z": "c3b58f99.4b6b",
+        "name": "23 Uhr ausschalten",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "00 23 * * *",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "off",
+        "payloadType": "str",
+        "x": 200,
+        "y": 160,
+        "wires": [
+            [
+                "98888b67.580fd8"
+            ]
+        ]
+    },
+    {
+        "id": "98888b67.580fd8",
+        "type": "mqtt out",
+        "z": "c3b58f99.4b6b",
+        "name": "Wasserboiler",
+        "topic": "shellies/shellyplug-2F5242/relay/0/command",
+        "qos": "2",
+        "retain": "",
+        "broker": "79e66eb.1580d9",
+        "x": 510,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "b4c0c871.6cf438",
+        "type": "inject",
+        "z": "c3b58f99.4b6b",
+        "name": "6 Uhr einschalten",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "00 06 * * *",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "on",
+        "payloadType": "str",
+        "x": 190,
+        "y": 100,
+        "wires": [
+            [
+                "98888b67.580fd8"
+            ]
+        ]
+    },
+    {
+        "id": "2d6d2b14.aee504",
+        "type": "mqtt in",
+        "z": "5768dd35.d74374",
+        "name": "openHAB MQTT",
+        "topic": "openhab/#",
+        "qos": "0",
+        "datatype": "auto",
+        "broker": "79e66eb.1580d9",
+        "x": 120,
+        "y": 300,
+        "wires": [
+            [
+                "f4cbfcd.fa0f"
+            ]
+        ]
+    },
+    {
+        "id": "f4cbfcd.fa0f",
+        "type": "debug",
+        "z": "5768dd35.d74374",
+        "name": "oh debug",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 360,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "4711f4a7.8efc8c",
+        "type": "mqtt in",
+        "z": "c77d74c7.70dbd8",
+        "name": "openhab/human_presence",
+        "topic": "openhab/human_presence",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "79e66eb.1580d9",
+        "x": 190,
+        "y": 120,
+        "wires": [
+            [
+                "d71e6878.0fa648"
+            ]
+        ]
+    },
+    {
+        "id": "9cbde0c8.e9846",
+        "type": "trigger",
+        "z": "c77d74c7.70dbd8",
+        "name": "min 3min offline",
+        "op1": "",
+        "op2": "",
+        "op1type": "nul",
+        "op2type": "pay",
+        "duration": "3",
+        "extend": false,
+        "overrideDelay": false,
+        "units": "min",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 740,
+        "y": 126,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d71e6878.0fa648",
+        "type": "switch",
+        "z": "c77d74c7.70dbd8",
+        "name": "is einer da?",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "ON",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 410,
+        "y": 120,
+        "wires": [
+            [
+                "7ff8247d.40ed9c"
+            ],
+            [
+                "9cbde0c8.e9846"
+            ]
+        ],
+        "outputLabels": [
+            "jo",
+            "nö"
+        ]
+    },
+    {
+        "id": "7ff8247d.40ed9c",
+        "type": "change",
+        "z": "c77d74c7.70dbd8",
+        "name": "reset",
+        "rules": [
+            {
+                "t": "set",
+                "p": "reset",
+                "pt": "msg",
+                "to": "true",
+                "tot": "bool"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 570,
+        "y": 80,
+        "wires": [
+            [
+                "9cbde0c8.e9846"
+            ]
+        ]
+    },
+    {
+        "id": "625c7a3b.8a2f04",
+        "type": "subflow:5359829e.1c6e0c",
+        "z": "733f33fb.bb2f8c",
+        "name": "",
+        "x": 800,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "b6e41954.632408",
+        "type": "function",
+        "z": "733f33fb.bb2f8c",
+        "name": "Frage Carlos starten",
+        "func": "var opts = {\n  reply_markup: JSON.stringify({\n    \"inline_keyboard\": [[\n                {\n                    \"text\": \"Ja sia\",\n                    \"callback_data\": \"carlos-an\"            \n                },\n                {\n                    \"text\": \"Nee\",\n                    \"callback_data\": \"nix-carlos\"            \n                }]\n            ]\n  })\n};\n\nmsg.payload = {\n    content: \"Keiner is mehr zu Hause, willse Carlos los schicken?\",\n    options: opts,\n    type: \"message\"\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 560,
+        "y": 120,
+        "wires": [
+            [
+                "625c7a3b.8a2f04"
+            ]
+        ]
+    },
+    {
+        "id": "b26b7386.ee684",
+        "type": "telegram event",
+        "z": "733f33fb.bb2f8c",
+        "name": "Antwort Carlos",
+        "bot": "70243f6a.645f6",
+        "event": "callback_query",
+        "autoanswer": false,
+        "x": 120,
+        "y": 340,
+        "wires": [
+            [
+                "5fedfa76.d6eb84"
+            ]
+        ]
+    },
+    {
+        "id": "5fedfa76.d6eb84",
+        "type": "switch",
+        "z": "733f33fb.bb2f8c",
+        "name": "Carlos anschalten?",
+        "property": "payload.content",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "carlos-an",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 330,
+        "y": 340,
+        "wires": [
+            [
+                "c4db96c6.edb498"
+            ]
+        ]
+    },
+    {
+        "id": "3df271f7.dd2e8e",
+        "type": "delay",
+        "z": "733f33fb.bb2f8c",
+        "name": "Nur einma an Tach",
+        "pauseType": "rate",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "day",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "x": 810,
+        "y": 300,
+        "wires": [
+            [
+                "5643982.ca97b68",
+                "f63cd2c7.5eeaa"
+            ]
+        ]
+    },
+    {
+        "id": "5643982.ca97b68",
+        "type": "change",
+        "z": "733f33fb.bb2f8c",
+        "name": "Heute wurde gesaugt",
+        "rules": [
+            {
+                "t": "set",
+                "p": "gesaugt",
+                "pt": "flow",
+                "to": "true",
+                "tot": "bool"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1040,
+        "y": 260,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "7e800e21.57bb7",
+        "type": "switch",
+        "z": "733f33fb.bb2f8c",
+        "name": "Heute schon gesaugt?",
+        "property": "gesaugt",
+        "propertyType": "flow",
+        "rules": [
+            {
+                "t": "false"
+            },
+            {
+                "t": "null"
+            }
+        ],
+        "checkall": "false",
+        "repair": false,
+        "outputs": 2,
+        "x": 320,
+        "y": 120,
+        "wires": [
+            [
+                "b6e41954.632408"
+            ],
+            [
+                "b6e41954.632408"
+            ]
+        ]
+    },
+    {
+        "id": "c4db96c6.edb498",
+        "type": "switch",
+        "z": "733f33fb.bb2f8c",
+        "name": "Heute schon gesaugt?",
+        "property": "gesaugt",
+        "propertyType": "flow",
+        "rules": [
+            {
+                "t": "false"
+            },
+            {
+                "t": "null"
+            },
+            {
+                "t": "true"
+            }
+        ],
+        "checkall": "false",
+        "repair": false,
+        "outputs": 3,
+        "x": 560,
+        "y": 340,
+        "wires": [
+            [
+                "3df271f7.dd2e8e"
+            ],
+            [
+                "3df271f7.dd2e8e"
+            ],
+            [
+                "4a817f15.9c36c"
+            ]
+        ]
+    },
+    {
+        "id": "c26d6d7d.1f3ca",
+        "type": "telegram sender",
+        "z": "733f33fb.bb2f8c",
+        "name": "Nachricht senden",
+        "bot": "70243f6a.645f6",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 1290,
+        "y": 380,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "4a817f15.9c36c",
+        "type": "function",
+        "z": "733f33fb.bb2f8c",
+        "name": "Nachricht heute nich mehr",
+        "func": "msg.payload = {\n    content: \"Heute wurde schomma gesaugt\",\n    type: \"message\",\n    chatId: msg.payload.chatId\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 820,
+        "y": 380,
+        "wires": [
+            [
+                "c26d6d7d.1f3ca"
+            ]
+        ]
+    },
+    {
+        "id": "f63cd2c7.5eeaa",
+        "type": "function",
+        "z": "733f33fb.bb2f8c",
+        "name": "Nachricht gestartet",
+        "func": "msg.payload = {\n    content: \"Carlos wird gestartet\",\n    type: \"message\",\n    chatId: msg.payload.chatId\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 1030,
+        "y": 320,
+        "wires": [
+            [
+                "c26d6d7d.1f3ca"
+            ]
+        ]
+    },
+    {
+        "id": "bb3afab8.8390a8",
+        "type": "inject",
+        "z": "733f33fb.bb2f8c",
+        "name": "Sauger zurücksetzen um Mitternacht",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "00 00 * * *",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "false",
+        "payloadType": "bool",
+        "x": 190,
+        "y": 540,
+        "wires": [
+            [
+                "e5233368.cbc5c"
+            ]
+        ]
+    },
+    {
+        "id": "e5233368.cbc5c",
+        "type": "change",
+        "z": "733f33fb.bb2f8c",
+        "name": "reset Carlos",
+        "rules": [
+            {
+                "t": "set",
+                "p": "gesaugt",
+                "pt": "flow",
+                "to": "false",
+                "tot": "bool"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 510,
+        "y": 540,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "550d25fe.427e4c",
+        "type": "subflow:c77d74c7.70dbd8",
+        "z": "733f33fb.bb2f8c",
+        "name": "Is einer da?",
+        "env": [],
+        "x": 110,
+        "y": 120,
+        "wires": [
+            [
+                "7e800e21.57bb7"
+            ]
+        ]
+    },
+    {
+        "id": "4942f8c6.521a18",
+        "type": "switch",
+        "z": "fa23c1e.a9e934",
+        "name": "angeschaltet",
+        "property": "aktiv",
+        "propertyType": "env",
+        "rules": [
+            {
+                "t": "true"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 250,
+        "y": 100,
+        "wires": [
+            [
+                "f5cc52e0.d3dd"
+            ]
+        ]
+    },
+    {
+        "id": "f5cc52e0.d3dd",
+        "type": "time-range-switch",
+        "z": "fa23c1e.a9e934",
+        "name": "Zwischen 9 und 21",
+        "lat": "",
+        "lon": "",
+        "startTime": "09:00",
+        "endTime": "21:00",
+        "startOffset": 0,
+        "endOffset": 0,
+        "x": 450,
+        "y": 100,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "5684076e.3d08b8",
+        "type": "subflow:fa23c1e.a9e934",
+        "z": "5359829e.1c6e0c",
+        "name": "",
+        "x": 170,
+        "y": 80,
+        "wires": [
+            [
+                "3547f9c7.832296"
+            ]
+        ]
+    }
+]

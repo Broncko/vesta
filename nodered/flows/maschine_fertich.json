@@ -1,0 +1,609 @@
+[
+    {
+        "id": "7a2b66c.69a5298",
+        "type": "subflow",
+        "name": "Gerät gestartet oder fertich",
+        "info": "Prüft basierend auf dem shelly plug-s ob das angeschlossene Gerät gerade gestartet wurde oder fertig geworden ist.\n\nz.B. für:\n- Spülmaschine\n- Waschmaschine\n- Trockner\n\n\nOutput 1 (oben): Gerät wurde gerade gestartet\nOutput 2 (unten): Gerät ist soeben fertig geworden",
+        "category": "",
+        "in": [
+            {
+                "x": 60,
+                "y": 120,
+                "wires": [
+                    {
+                        "id": "eb184cfa.a27f1"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 1100,
+                "y": 80,
+                "wires": [
+                    {
+                        "id": "4b15a682.2f2678",
+                        "port": 0
+                    }
+                ]
+            },
+            {
+                "x": 1100,
+                "y": 160,
+                "wires": [
+                    {
+                        "id": "4b15a682.2f2678",
+                        "port": 1
+                    }
+                ]
+            }
+        ],
+        "env": [],
+        "color": "#AAAA66",
+        "inputLabels": [
+            "Integer in Watt"
+        ],
+        "outputLabels": [
+            "gestartet",
+            "fertich"
+        ],
+        "icon": "font-awesome/fa-power-off",
+        "status": {
+            "x": 700,
+            "y": 40,
+            "wires": [
+                {
+                    "id": "7238a31.a712d5c",
+                    "port": 0
+                },
+                {
+                    "id": "9980cc34.1f96",
+                    "port": 0
+                }
+            ]
+        }
+    },
+    {
+        "id": "75a9840d.4788cc",
+        "type": "switch",
+        "z": "7a2b66c.69a5298",
+        "name": "Gerät an?",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "gt",
+                "v": "2",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 360,
+        "y": 120,
+        "wires": [
+            [
+                "7238a31.a712d5c"
+            ],
+            [
+                "9980cc34.1f96"
+            ]
+        ]
+    },
+    {
+        "id": "eb184cfa.a27f1",
+        "type": "function",
+        "z": "7a2b66c.69a5298",
+        "name": "parseFloat",
+        "func": "msg.payload = parseFloat(msg.payload);\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 190,
+        "y": 120,
+        "wires": [
+            [
+                "75a9840d.4788cc"
+            ]
+        ]
+    },
+    {
+        "id": "5961a70f.239898",
+        "type": "rbe",
+        "z": "7a2b66c.69a5298",
+        "name": "wert geändert?",
+        "func": "rbei",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "property": "device_is_on",
+        "x": 700,
+        "y": 120,
+        "wires": [
+            [
+                "4b15a682.2f2678"
+            ]
+        ]
+    },
+    {
+        "id": "7238a31.a712d5c",
+        "type": "change",
+        "z": "7a2b66c.69a5298",
+        "name": "an",
+        "rules": [
+            {
+                "t": "set",
+                "p": "device_is_on",
+                "pt": "msg",
+                "to": "true",
+                "tot": "bool"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 510,
+        "y": 80,
+        "wires": [
+            [
+                "5961a70f.239898"
+            ]
+        ]
+    },
+    {
+        "id": "9980cc34.1f96",
+        "type": "change",
+        "z": "7a2b66c.69a5298",
+        "name": "aus",
+        "rules": [
+            {
+                "t": "set",
+                "p": "device_is_on",
+                "pt": "msg",
+                "to": "false",
+                "tot": "bool"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 510,
+        "y": 160,
+        "wires": [
+            [
+                "5961a70f.239898"
+            ]
+        ]
+    },
+    {
+        "id": "4b15a682.2f2678",
+        "type": "switch",
+        "z": "7a2b66c.69a5298",
+        "name": "gestartet oder fertich",
+        "property": "device_is_on",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "true"
+            },
+            {
+                "t": "false"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 920,
+        "y": 120,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "fa23c1e.a9e934",
+        "type": "subflow",
+        "name": "DND",
+        "info": "# DND - Fresse halten, ich will pennen!\n\n## Wat et tut\nDo not disturb:\nReicht das Nachrichten-Objekt durch wenn innerhalb von definiertem Zeitraum, andernfalls wird der Output geblockt.\n\n## Parameter\n### aktiv (env)\nNur aktiv wenn auf true gesetzt.",
+        "category": "",
+        "in": [
+            {
+                "x": 120,
+                "y": 100,
+                "wires": [
+                    {
+                        "id": "4942f8c6.521a18"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 620,
+                "y": 100,
+                "wires": [
+                    {
+                        "id": "f5cc52e0.d3dd",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [
+            {
+                "name": "aktiv",
+                "type": "bool",
+                "value": "true",
+                "ui": {
+                    "icon": "font-awesome/fa-bell-slash",
+                    "label": {
+                        "en-US": "aktiv"
+                    },
+                    "type": "input",
+                    "opts": {
+                        "types": [
+                            "bool"
+                        ]
+                    }
+                }
+            }
+        ],
+        "color": "#E6E0F8",
+        "inputLabels": [
+            "msg"
+        ],
+        "outputLabels": [
+            "msg"
+        ],
+        "icon": "font-awesome/fa-bell-slash"
+    },
+    {
+        "id": "4942f8c6.521a18",
+        "type": "switch",
+        "z": "fa23c1e.a9e934",
+        "name": "angeschaltet",
+        "property": "aktiv",
+        "propertyType": "env",
+        "rules": [
+            {
+                "t": "true"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 250,
+        "y": 100,
+        "wires": [
+            [
+                "f5cc52e0.d3dd"
+            ]
+        ]
+    },
+    {
+        "id": "f5cc52e0.d3dd",
+        "type": "time-range-switch",
+        "z": "fa23c1e.a9e934",
+        "name": "Zwischen 9 und 21",
+        "lat": "",
+        "lon": "",
+        "startTime": "09:00",
+        "endTime": "21:00",
+        "startOffset": 0,
+        "endOffset": 0,
+        "x": 450,
+        "y": 100,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "5359829e.1c6e0c",
+        "type": "subflow",
+        "name": "an Bewohner senden",
+        "info": "",
+        "category": "",
+        "in": [
+            {
+                "x": 40,
+                "y": 80,
+                "wires": [
+                    {
+                        "id": "5684076e.3d08b8"
+                    }
+                ]
+            }
+        ],
+        "out": [],
+        "env": [
+            {
+                "name": "bewohner",
+                "type": "env",
+                "value": "global.telegram.chatIds"
+            },
+            {
+                "name": "dnd",
+                "type": "bool",
+                "value": "true"
+            }
+        ],
+        "color": "#A6BBCF",
+        "icon": "node-red-contrib-telegrambot/telegram_cmd.png"
+    },
+    {
+        "id": "1b24ed2.6b5a113",
+        "type": "telegram sender",
+        "z": "5359829e.1c6e0c",
+        "name": "Senden",
+        "bot": "70243f6a.645f6",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 560,
+        "y": 80,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "3547f9c7.832296",
+        "type": "change",
+        "z": "5359829e.1c6e0c",
+        "name": "setze ChatIds",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload.chatId",
+                "pt": "msg",
+                "to": "telegram.chatIds",
+                "tot": "global"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 360,
+        "y": 80,
+        "wires": [
+            [
+                "1b24ed2.6b5a113"
+            ]
+        ]
+    },
+    {
+        "id": "5684076e.3d08b8",
+        "type": "subflow:fa23c1e.a9e934",
+        "z": "5359829e.1c6e0c",
+        "name": "",
+        "x": 170,
+        "y": 80,
+        "wires": [
+            [
+                "3547f9c7.832296"
+            ]
+        ]
+    },
+    {
+        "id": "70243f6a.645f6",
+        "type": "telegram bot",
+        "botname": "GharaWohntInKmp5_bot",
+        "usernames": "bronckoKmp5",
+        "chatids": "",
+        "baseapiurl": "",
+        "updatemode": "polling",
+        "pollinterval": "90",
+        "usesocks": false,
+        "sockshost": "",
+        "socksport": "6667",
+        "socksusername": "anonymous",
+        "sockspassword": "",
+        "bothost": "",
+        "botpath": "",
+        "localbotport": "8443",
+        "publicbotport": "8443",
+        "privatekey": "",
+        "certificate": "",
+        "useselfsignedcertificate": false,
+        "sslterminated": false,
+        "verboselogging": false
+    },
+    {
+        "id": "d5a0e700.940238",
+        "type": "tab",
+        "label": "Maschine fertich?",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "28a00736.8acbc8",
+        "type": "function",
+        "z": "d5a0e700.940238",
+        "name": "Nachricht fertig",
+        "func": "msg.payload = {\n    type: 'message',\n    content: 'Die Spülmaschine is fertich, kannße ausräumen'\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 1240,
+        "y": 260,
+        "wires": [
+            [
+                "c8da13f8.ab386"
+            ]
+        ]
+    },
+    {
+        "id": "2920e4b2.99d7dc",
+        "type": "mqtt in",
+        "z": "d5a0e700.940238",
+        "name": "Leistung(W) Spülmaschine",
+        "topic": "shellies/shellyplug-s-B48C72/relay/0/power",
+        "qos": "1",
+        "datatype": "auto",
+        "broker": "79e66eb.1580d9",
+        "x": 610,
+        "y": 220,
+        "wires": [
+            [
+                "f01346e2.105618"
+            ]
+        ]
+    },
+    {
+        "id": "c8da13f8.ab386",
+        "type": "subflow:5359829e.1c6e0c",
+        "z": "d5a0e700.940238",
+        "name": "",
+        "env": [],
+        "x": 1480,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "f01346e2.105618",
+        "type": "subflow:7a2b66c.69a5298",
+        "z": "d5a0e700.940238",
+        "name": "Spülmaschine gestartet oder fertich?",
+        "env": [],
+        "x": 950,
+        "y": 220,
+        "wires": [
+            [
+                "3a7146f6.70fd4a"
+            ],
+            [
+                "28a00736.8acbc8"
+            ]
+        ]
+    },
+    {
+        "id": "3a7146f6.70fd4a",
+        "type": "function",
+        "z": "d5a0e700.940238",
+        "name": "Nachricht gestartet",
+        "func": "msg.payload = {\n    type: 'message',\n    content: 'Spülmaschine is jetz an'\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 1250,
+        "y": 180,
+        "wires": [
+            [
+                "c8da13f8.ab386"
+            ]
+        ]
+    },
+    {
+        "id": "2ac01f4d.d962e",
+        "type": "mqtt in",
+        "z": "d5a0e700.940238",
+        "name": "Leistung(W) Waschmaschine",
+        "topic": "shellies/shellyplug-s-B57D99/relay/0/power",
+        "qos": "1",
+        "datatype": "auto",
+        "broker": "79e66eb.1580d9",
+        "x": 620,
+        "y": 400,
+        "wires": [
+            [
+                "78e9ee58.5c2cd"
+            ]
+        ]
+    },
+    {
+        "id": "2159909a.f2152",
+        "type": "function",
+        "z": "d5a0e700.940238",
+        "name": "Nachricht fertig",
+        "func": "msg.payload = {\n    type: 'message',\n    content: 'Die Wäsche is fertich, kannße aufhängen'\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 1240,
+        "y": 440,
+        "wires": [
+            [
+                "725adc38.747c34"
+            ]
+        ]
+    },
+    {
+        "id": "725adc38.747c34",
+        "type": "subflow:5359829e.1c6e0c",
+        "z": "d5a0e700.940238",
+        "name": "",
+        "env": [],
+        "x": 1480,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "78e9ee58.5c2cd",
+        "type": "subflow:7a2b66c.69a5298",
+        "z": "d5a0e700.940238",
+        "name": "Waschmaschine gestartet oder fertich?",
+        "env": [],
+        "x": 960,
+        "y": 400,
+        "wires": [
+            [
+                "f88323e4.67a66"
+            ],
+            [
+                "2159909a.f2152"
+            ]
+        ]
+    },
+    {
+        "id": "f88323e4.67a66",
+        "type": "function",
+        "z": "d5a0e700.940238",
+        "name": "Nachricht gestartet",
+        "func": "msg.payload = {\n    type: 'message',\n    content: 'Waschmaschine is jetz an'\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 1250,
+        "y": 360,
+        "wires": [
+            [
+                "725adc38.747c34"
+            ]
+        ]
+    },
+    {
+        "id": "79e66eb.1580d9",
+        "type": "mqtt-broker",
+        "name": "Mosquitto (lokal)",
+        "broker": "localhost",
+        "port": "1883",
+        "clientid": "",
+        "usetls": false,
+        "compatmode": false,
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": ""
+    }
+]

@@ -1,0 +1,195 @@
+[
+    {
+        "id": "af3ec732.87af18",
+        "type": "tab",
+        "label": "Kommandos",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "f7ea1db4.d7bc9",
+        "type": "telegram sender",
+        "z": "af3ec732.87af18",
+        "name": "Nachricht senden",
+        "bot": "70243f6a.645f6",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 870,
+        "y": 400,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "42e80da4.6285b4",
+        "type": "telegram command",
+        "z": "af3ec732.87af18",
+        "name": "/tach",
+        "command": "/tach",
+        "bot": "70243f6a.645f6",
+        "strict": false,
+        "hasresponse": false,
+        "useregex": false,
+        "removeregexcommand": false,
+        "outputs": 1,
+        "x": 130,
+        "y": 160,
+        "wires": [
+            [
+                "fb780bf0.6e6148",
+                "638f700c.cd0cb"
+            ]
+        ]
+    },
+    {
+        "id": "fb780bf0.6e6148",
+        "type": "function",
+        "z": "af3ec732.87af18",
+        "name": "Neuem user antworten",
+        "func": "name = msg.originalMessage.from.first_name;\nusername = msg.originalMessage.from.username;\n\nconst resident = name ? name : (username ? username : \"Bewohner\");\nconst msgText = \"Hallo \" + resident + \", ich bin Ghara, das intelligente Haus von Aurelia, Hendrik und Matilda. Du kannst mich alles fragen, um eine Übersicht zu bekommen, gib einfach /watdenn ein\"\n\nmsg.payload.type = 'message';\nmsg.payload.content = msgText;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 560,
+        "y": 160,
+        "wires": [
+            [
+                "f7ea1db4.d7bc9"
+            ]
+        ]
+    },
+    {
+        "id": "638f700c.cd0cb",
+        "type": "change",
+        "z": "af3ec732.87af18",
+        "name": "chatIds speichern",
+        "rules": [
+            {
+                "t": "set",
+                "p": "telegram.chatIds",
+                "pt": "global",
+                "to": "$distinct(\t    $append(\t        global.telegram.chatIds,\t        [msg.payload.chatId]\t    )\t)",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 330,
+        "y": 100,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "24b2d6c4.13217a",
+        "type": "telegram receiver",
+        "z": "af3ec732.87af18",
+        "name": "Einfach Gelaber",
+        "bot": "70243f6a.645f6",
+        "saveDataDir": "",
+        "filterCommands": true,
+        "x": 160,
+        "y": 280,
+        "wires": [
+            [
+                "b29b2949.ab15a8"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "b29b2949.ab15a8",
+        "type": "switch",
+        "z": "af3ec732.87af18",
+        "name": "Kennste?",
+        "property": "telegram.chatIds",
+        "propertyType": "global",
+        "rules": [
+            {
+                "t": "cont",
+                "v": "payload.chatId",
+                "vt": "msg"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 360,
+        "y": 280,
+        "wires": [
+            [
+                "a22ec8f0.209128"
+            ],
+            [
+                "af1012b0.6e2c6"
+            ]
+        ]
+    },
+    {
+        "id": "a22ec8f0.209128",
+        "type": "function",
+        "z": "af3ec732.87af18",
+        "name": "Kennich",
+        "func": "msg.payload.content = \"Jo was geht denn so ab?\"\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 520,
+        "y": 240,
+        "wires": [
+            [
+                "f7ea1db4.d7bc9"
+            ]
+        ]
+    },
+    {
+        "id": "af1012b0.6e2c6",
+        "type": "function",
+        "z": "af3ec732.87af18",
+        "name": "Kennich nich",
+        "func": "msg.payload.content = \"Wat du hier wills, sach ersma /tach\"\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 530,
+        "y": 320,
+        "wires": [
+            [
+                "f7ea1db4.d7bc9"
+            ]
+        ]
+    },
+    {
+        "id": "70243f6a.645f6",
+        "type": "telegram bot",
+        "botname": "GharaWohntInKmp5_bot",
+        "usernames": "bronckoKmp5",
+        "chatids": "",
+        "baseapiurl": "",
+        "updatemode": "polling",
+        "pollinterval": "90",
+        "usesocks": false,
+        "sockshost": "",
+        "socksport": "6667",
+        "socksusername": "anonymous",
+        "sockspassword": "",
+        "bothost": "",
+        "botpath": "",
+        "localbotport": "8443",
+        "publicbotport": "8443",
+        "privatekey": "",
+        "certificate": "",
+        "useselfsignedcertificate": false,
+        "sslterminated": false,
+        "verboselogging": false
+    }
+]

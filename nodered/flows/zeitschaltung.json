@@ -1,0 +1,93 @@
+[
+    {
+        "id": "c3b58f99.4b6b",
+        "type": "tab",
+        "label": "Zeitschaltung",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "bad40811.614238",
+        "type": "inject",
+        "z": "c3b58f99.4b6b",
+        "name": "23 Uhr ausschalten",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "00 23 * * *",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "off",
+        "payloadType": "str",
+        "x": 200,
+        "y": 160,
+        "wires": [
+            [
+                "98888b67.580fd8"
+            ]
+        ]
+    },
+    {
+        "id": "98888b67.580fd8",
+        "type": "mqtt out",
+        "z": "c3b58f99.4b6b",
+        "name": "Wasserboiler",
+        "topic": "shellies/shellyplug-2F5242/relay/0/command",
+        "qos": "2",
+        "retain": "",
+        "broker": "79e66eb.1580d9",
+        "x": 510,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "b4c0c871.6cf438",
+        "type": "inject",
+        "z": "c3b58f99.4b6b",
+        "name": "6 Uhr einschalten",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "00 06 * * *",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "on",
+        "payloadType": "str",
+        "x": 190,
+        "y": 100,
+        "wires": [
+            [
+                "98888b67.580fd8"
+            ]
+        ]
+    },
+    {
+        "id": "79e66eb.1580d9",
+        "type": "mqtt-broker",
+        "name": "Mosquitto (lokal)",
+        "broker": "localhost",
+        "port": "1883",
+        "clientid": "",
+        "usetls": false,
+        "compatmode": false,
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": ""
+    }
+]

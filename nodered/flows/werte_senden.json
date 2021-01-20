@@ -1,0 +1,194 @@
+[
+    {
+        "id": "86ae2677.27a028",
+        "type": "tab",
+        "label": "Werte senden",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "f0a9e912.9ff0f8",
+        "type": "telegram sender",
+        "z": "86ae2677.27a028",
+        "d": true,
+        "name": "Nachricht senden",
+        "bot": "70243f6a.645f6",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 1150,
+        "y": 380,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "b7996e25.b34e9",
+        "type": "mqtt in",
+        "z": "86ae2677.27a028",
+        "name": "Temp Esszimmer",
+        "topic": "homegear/1234-5678-9abc/plain/1/1/ACTUAL_TEMPERATURE",
+        "qos": "1",
+        "datatype": "utf8",
+        "broker": "79e66eb.1580d9",
+        "x": 200,
+        "y": 200,
+        "wires": [
+            [
+                "7ad6036b.31c59c"
+            ]
+        ]
+    },
+    {
+        "id": "78194747.9ee308",
+        "type": "function",
+        "z": "86ae2677.27a028",
+        "name": "Nachricht tmp geändert",
+        "func": "msg.payload = {\n    type: 'message',\n    content: 'Temperatur im Esszimmer stark geändert: ' + msg.temperature + \"°C\"\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 830,
+        "y": 200,
+        "wires": [
+            [
+                "d859d5e8.d10de8"
+            ]
+        ]
+    },
+    {
+        "id": "7ad6036b.31c59c",
+        "type": "change",
+        "z": "86ae2677.27a028",
+        "name": "setze msg.temperature",
+        "rules": [
+            {
+                "t": "set",
+                "p": "temperature",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 410,
+        "y": 200,
+        "wires": [
+            [
+                "2dd40317.314dbc"
+            ]
+        ]
+    },
+    {
+        "id": "d859d5e8.d10de8",
+        "type": "change",
+        "z": "86ae2677.27a028",
+        "name": "setze ChatIds",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload.chatId",
+                "pt": "msg",
+                "to": "telegram.chatIds",
+                "tot": "global"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 940,
+        "y": 380,
+        "wires": [
+            [
+                "f0a9e912.9ff0f8",
+                "58bb83f0.8e0f8c"
+            ]
+        ]
+    },
+    {
+        "id": "58bb83f0.8e0f8c",
+        "type": "debug",
+        "z": "86ae2677.27a028",
+        "name": "Hau alles raus",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1140,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "2dd40317.314dbc",
+        "type": "rbe",
+        "z": "86ae2677.27a028",
+        "name": "20% geändert?",
+        "func": "deadband",
+        "gap": "20%",
+        "start": "",
+        "inout": "in",
+        "property": "temperature",
+        "x": 620,
+        "y": 200,
+        "wires": [
+            [
+                "78194747.9ee308"
+            ]
+        ]
+    },
+    {
+        "id": "70243f6a.645f6",
+        "type": "telegram bot",
+        "botname": "GharaWohntInKmp5_bot",
+        "usernames": "bronckoKmp5",
+        "chatids": "",
+        "baseapiurl": "",
+        "updatemode": "polling",
+        "pollinterval": "90",
+        "usesocks": false,
+        "sockshost": "",
+        "socksport": "6667",
+        "socksusername": "anonymous",
+        "sockspassword": "",
+        "bothost": "",
+        "botpath": "",
+        "localbotport": "8443",
+        "publicbotport": "8443",
+        "privatekey": "",
+        "certificate": "",
+        "useselfsignedcertificate": false,
+        "sslterminated": false,
+        "verboselogging": false
+    },
+    {
+        "id": "79e66eb.1580d9",
+        "type": "mqtt-broker",
+        "name": "Mosquitto (lokal)",
+        "broker": "localhost",
+        "port": "1883",
+        "clientid": "",
+        "usetls": false,
+        "compatmode": false,
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": ""
+    }
+]
