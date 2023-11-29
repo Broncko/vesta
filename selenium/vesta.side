@@ -1,0 +1,219 @@
+{
+  "id": "168bdb08-0b10-4f6e-afce-b517cb4f02d1",
+  "version": "2.0",
+  "name": "vesta",
+  "url": "https://www.meineta.at",
+  "tests": [{
+    "id": "fefb1e70-1dc3-4c36-b620-a103dd6445cf",
+    "name": "eta superuser",
+    "commands": [{
+      "id": "d0eb2db4-34ab-4f9e-b9be-51e0017e1d52",
+      "comment": "",
+      "command": "open",
+      "target": "/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "35a7e218-a9ad-4309-93a3-0ca46fe54999",
+      "comment": "",
+      "command": "if",
+      "target": "id=btnLogin",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "125b9d63-b511-44a7-98d6-51779e4c78ce",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1658x1002",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "78085e93-9e75-4258-91fe-7c2d86e5b9c8",
+      "comment": "",
+      "command": "type",
+      "target": "id=txtUsername",
+      "targets": [
+        ["id=txtUsername", "id"],
+        ["name=txtUsername", "name"],
+        ["css=#txtUsername", "css:finder"],
+        ["xpath=//input[@id='txtUsername']", "xpath:attributes"],
+        ["xpath=//form[@id='j_idt51']/div/div/div[2]/div/input", "xpath:idRelative"],
+        ["xpath=//div/input", "xpath:position"]
+      ],
+      "value": "hendrik.heinemann@gmail.com"
+    }, {
+      "id": "a337a950-1135-406d-8b60-696bd3bee0d4",
+      "comment": "",
+      "command": "type",
+      "target": "id=txtPassword",
+      "targets": [
+        ["id=txtPassword", "id"],
+        ["name=txtPassword", "name"],
+        ["css=#txtPassword", "css:finder"],
+        ["xpath=//input[@id='txtPassword']", "xpath:attributes"],
+        ["xpath=//form[@id='j_idt51']/div/div/div[2]/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "Disk-Boxlike-Neatness4"
+    }, {
+      "id": "d9313ddd-1229-4e19-8a26-6f73efb977c5",
+      "comment": "",
+      "command": "click",
+      "target": "css=.ml-2 > .slider",
+      "targets": [
+        ["css=.ml-2 > .slider", "css:finder"],
+        ["xpath=//div[@id='chkRememberMeWrapper']/label[2]/span", "xpath:idRelative"],
+        ["xpath=//label[2]/span", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "24ff54d3-570f-406c-b0aa-916969e0f037",
+      "comment": "",
+      "command": "click",
+      "target": "id=btnLogin",
+      "targets": [
+        ["id=btnLogin", "id"],
+        ["linkText=Anmelden", "linkText"],
+        ["css=#btnLogin", "css:finder"],
+        ["xpath=//a[@id='btnLogin']", "xpath:attributes"],
+        ["xpath=//form[@id='j_idt51']/div/div/div[2]/div[5]/div/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '#')]", "xpath:href"],
+        ["xpath=//div[5]/div/a", "xpath:position"],
+        ["xpath=//a[contains(.,' Anmelden')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "ed9771d4-7e38-4837-a3e7-e889f9bfaf6b",
+      "comment": "",
+      "command": "end",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "56d8b9bf-d150-41a1-90e2-aca1f7c7aa14",
+      "comment": "",
+      "command": "click",
+      "target": "css=.list-group-item:nth-child(3) > .d-flex",
+      "targets": [
+        ["css=.list-group-item:nth-child(3) > .d-flex", "css:finder"],
+        ["xpath=//div[@id='mainContent']/div[2]/div/div[2]/a[3]/div", "xpath:idRelative"],
+        ["xpath=//a[3]/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "30461552-5283-4b09-810b-b27f9fe5e036",
+      "comment": "",
+      "command": "click",
+      "target": "id=vncClientCanvas",
+      "targets": [
+        ["id=vncClientCanvas", "id"],
+        ["css=#vncClientCanvas", "css:finder"],
+        ["xpath=//canvas[@id='vncClientCanvas']", "xpath:attributes"],
+        ["xpath=//div[@id='mainContent']/div[2]/canvas", "xpath:idRelative"],
+        ["xpath=//canvas", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "4b87e226-795c-4752-bec5-074a357a0de5",
+      "comment": "",
+      "command": "click",
+      "target": "id=vncClientCanvas",
+      "targets": [
+        ["id=vncClientCanvas", "id"],
+        ["css=#vncClientCanvas", "css:finder"],
+        ["xpath=//canvas[@id='vncClientCanvas']", "xpath:attributes"],
+        ["xpath=//div[@id='mainContent']/div[2]/canvas", "xpath:idRelative"],
+        ["xpath=//canvas", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "a7d6886c-9a5e-43fe-8c0f-3a0212bb4d64",
+      "comment": "",
+      "command": "click",
+      "target": "id=vncClientCanvas",
+      "targets": [
+        ["id=vncClientCanvas", "id"],
+        ["css=#vncClientCanvas", "css:finder"],
+        ["xpath=//canvas[@id='vncClientCanvas']", "xpath:attributes"],
+        ["xpath=//div[@id='mainContent']/div[2]/canvas", "xpath:idRelative"],
+        ["xpath=//canvas", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "236108f4-8dfc-4b1a-a898-43e216810205",
+      "comment": "",
+      "command": "click",
+      "target": "id=vncClientCanvas",
+      "targets": [
+        ["id=vncClientCanvas", "id"],
+        ["css=#vncClientCanvas", "css:finder"],
+        ["xpath=//canvas[@id='vncClientCanvas']", "xpath:attributes"],
+        ["xpath=//div[@id='mainContent']/div[2]/canvas", "xpath:idRelative"],
+        ["xpath=//canvas", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "b23ad061-42d1-4397-a295-06891454ead1",
+      "comment": "",
+      "command": "click",
+      "target": "id=vncClientCanvas",
+      "targets": [
+        ["id=vncClientCanvas", "id"],
+        ["css=#vncClientCanvas", "css:finder"],
+        ["xpath=//canvas[@id='vncClientCanvas']", "xpath:attributes"],
+        ["xpath=//div[@id='mainContent']/div[2]/canvas", "xpath:idRelative"],
+        ["xpath=//canvas", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "a20c3e95-7985-4cea-ad12-15ee63437024",
+      "comment": "",
+      "command": "click",
+      "target": "id=vncClientCanvas",
+      "targets": [
+        ["id=vncClientCanvas", "id"],
+        ["css=#vncClientCanvas", "css:finder"],
+        ["xpath=//canvas[@id='vncClientCanvas']", "xpath:attributes"],
+        ["xpath=//div[@id='mainContent']/div[2]/canvas", "xpath:idRelative"],
+        ["xpath=//canvas", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "d1ee9f09-53c0-4a2c-a663-fcdf7ad35e23",
+      "comment": "",
+      "command": "click",
+      "target": "id=vncClientCanvas",
+      "targets": [
+        ["id=vncClientCanvas", "id"],
+        ["css=#vncClientCanvas", "css:finder"],
+        ["xpath=//canvas[@id='vncClientCanvas']", "xpath:attributes"],
+        ["xpath=//div[@id='mainContent']/div[2]/canvas", "xpath:idRelative"],
+        ["xpath=//canvas", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "d3250f8d-e0e2-4cea-9162-05dc32879e43",
+      "comment": "",
+      "command": "click",
+      "target": "id=vncClientCanvas",
+      "targets": [
+        ["id=vncClientCanvas", "id"],
+        ["css=#vncClientCanvas", "css:finder"],
+        ["xpath=//canvas[@id='vncClientCanvas']", "xpath:attributes"],
+        ["xpath=//div[@id='mainContent']/div[2]/canvas", "xpath:idRelative"],
+        ["xpath=//canvas", "xpath:position"]
+      ],
+      "value": ""
+    }]
+  }],
+  "suites": [{
+    "id": "af0bef6f-28dc-4ccb-a3c3-1ddcc4774045",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": []
+  }],
+  "urls": ["https://www.meineta.at/"],
+  "plugins": []
+}
